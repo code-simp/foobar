@@ -12,7 +12,7 @@ jobs:
       - node/install-packages:
           pkg-manager: npm
       - run
-          command: jest
+          command: npm run test
           name: tests
   
   push_to_github:
