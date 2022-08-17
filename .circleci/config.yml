@@ -1,0 +1,34 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.2
+  heroku: circleci/heroku@1.2.6
+
+jobs:
+  test_the_script:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run
+          command: jest
+          name: tests
+  
+  push_to_github:
+    steps:
+      - run
+          command: git commit -m "random msg"
+          name: commit
+      -run
+          command: git push origin main
+          name: push
+
+workflows:
+  test_my_app:
+    jobs:
+      - test_the_script
+      - push_to_github
+          requires:
+            - test_the_script
+
