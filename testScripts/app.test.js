@@ -1,13 +1,11 @@
-const axios = require('axios').default;
+const request = require('supertest');
+const app = require('../app');
 
 describe('app test', () => {
-    it('should return 2', () => {
-        return axios.get('http://localhost:3001/')
-            .then(res => {
-                expect(res.data).toBe('3');
-            }).catch(err => {
-                console.log(err);
-            }
-            );
+    it('should return 2', async () => {
+        const response = await request(app).get("/");
+        console.log(response.body);
+        return expect(response.body).toEqual({ "a": 2 });
+
     });
 });
