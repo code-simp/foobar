@@ -5,7 +5,7 @@ orbs:
   heroku: circleci/heroku@1.2.6
 
 jobs:
-  build_and_test: # this can be any name you choose
+  test_the_script: # this can be any name you choose
     executor: node/default # use the default executor defined within the orb
     steps:
       - checkout
@@ -16,6 +16,8 @@ jobs:
           name: tests
   
   push_to_github:
+    docker:
+      - image: alpine:3.15
     steps:
       - run:
           command: echo "sup mofo"
@@ -31,7 +33,7 @@ workflows:
   test_my_app:
     jobs:
       - test_the_script
-      - push_to_github
+      - push_to_github:
           requires:
             - test_the_script
 
